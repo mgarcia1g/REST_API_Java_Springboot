@@ -1,12 +1,11 @@
 package com.RESTAPI.entity;
 
+import com.RESTAPI.request.CreateStudentRequest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.context.annotation.Primary;
 
 import javax.persistence.*;
 
@@ -18,7 +17,7 @@ import javax.persistence.*;
 @Table(name="Student")
 public class Student {
     @Id
-    @GeneratedValue //to increment in db
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //to increment in db
     @Column(name="id")
     @JsonIgnore
     private Long id;
@@ -28,5 +27,11 @@ public class Student {
     private String lastName;
     @Column(name="email")
     private String email;
+
+    public Student (CreateStudentRequest createStudentRequest){
+        this.firstName=createStudentRequest.getFirstName();
+        this.lastName=createStudentRequest.getLastName();
+        this.email=createStudentRequest.getEmail();
+    }
 
 }
